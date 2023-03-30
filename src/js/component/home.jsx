@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 //create your first component
 const Home = () => {
 	const [inputValue, setInputValue] = useState("");
-	const [listTodods, setListTodos] = useState([]);
+	const [listTodos, setListTodos] = useState([]);
 
 	const get = () => {
 		fetch('https://assets.breatheco.de/apis/fake/todos/user/BIOCISHERE')
@@ -18,7 +18,7 @@ const Home = () => {
 	}
 
 	useEffect(() => {
-		get()
+		get();
 	}, [])
 
 	return (
@@ -44,21 +44,21 @@ const Home = () => {
 									if (inputValue === "") {
 										alert("No tasks, add a task");
 									} else {
-										setListTodos(listTodods.concat(inputValue));
+										setListTodos(listTodos.concat({'label': inputValue, 'done': false}));
 										setInputValue("");
 									}
 								}
 							}}
 						/>
 					</li>
-					{listTodods.map((todo, index) => (
+					{listTodos.map((todo, index) => (
 						<li key={index} className="showAndHide border-bottom my-1 p-1">
 							{todo.label}
 							<i
 								className="fas fa-trash-alt float-end py-1 pe-2"
 								onClick={() =>
 									setListTodos(
-										listTodods.filter(
+										listTodos.filter(
 											(todo, currentIndex) => index != currentIndex
 										)
 									)
@@ -67,7 +67,7 @@ const Home = () => {
 						</li>
 					))}
 				</ul>
-				<h4 className="text-center">{listTodods.length} tasks left</h4>
+				<h4 className="text-center">{listTodos.length} tasks left</h4>
 			</div>
 		</div>
 	);
