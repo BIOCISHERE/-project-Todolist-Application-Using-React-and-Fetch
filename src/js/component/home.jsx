@@ -8,7 +8,8 @@ const Home = () => {
 	const get = () => {
 		fetch('https://assets.breatheco.de/apis/fake/todos/user/biocishere')
 		.then(res => res.json())
-		.then(data => setListTodos(...listTodos, data))
+		.then(data => setListTodos(listTodos.concat(data)))
+		
 	}
 
 	const put = (todo) => {
@@ -23,14 +24,40 @@ const Home = () => {
 		.then(data => console.log(data))
 	}
 
+	const post = () => {
+		fetch("https://assets.breatheco.de/apis/fake/todos/user/biocishere", {
+			method: "POST",
+			body: [],
+			headers : {
+				"Content-Type": "application/json"
+			}
+		})
+		.then(res => res.json())
+		.then(data => console.log(data))
+	}
+
+	const errase = () => {
+		fetch("https://assets.breatheco.de/apis/fake/todos/user/biocishere", {
+			method: "DELETE",
+			body: [],
+			headers : {
+				"Content-Type": "application/json"
+			}
+		})
+		.then(res => res.json())
+		.then(data => console.log(data))
+	}
+
+	const erraseAll = () => {
+		errase();
+		
+	}
+
+
 	useEffect(() => {
 		get();
 	}, [])
 
-	
-	useEffect(() => {
-		put(listTodos);	
-	}, [listTodos])
 
 	return (
 		<div className="container mt-2">
@@ -58,9 +85,15 @@ const Home = () => {
 									if (inputValue === "") {
 										alert("No tasks, add a task");
 									} else {
+										let newArray = listTodos.concat( { "label": inputValue, "done": false } )
+										setListTodos(newArray)
+										put(newArray)
+										setInputValue("")
+										/*
 										setListTodos(listTodos.concat( { "label": inputValue, "done": false } ));
 										setInputValue("");
 										put(listTodos);
+										*/
 									};
 								};
 							}}
@@ -72,21 +105,18 @@ const Home = () => {
 							<i
 								className="fas fa-trash-alt float-end py-1 pe-2"
 								onClick={() =>{
-									put(listTodos),
-									setListTodos(
-										listTodos.filter(
-											(todo, currentIndex) => (index != currentIndex)
-										)
-									)}
+									let newArray = listTodos.filter((i, current) => index!=current);
+									setListTodos(newArray);
+									put(newArray);
+								}
 								}
 							></i>
 						</li>
 					))}
 				</ul>
-				<h4 className="text-center">{listTodos.length} tasks left</h4>
+				<h4 className="text-center">{(listTodos.length == 0) ? "There's no tasks, add a task" : listTodos.length + " task left"}</h4>
 				<div className="text-center m-1">
-				    <button type="button" className="btn btn-danger my-2" onClick={() => setListTodos([])}>Delete all tasks</button> <br />
-					<span>After clicking the button, create a new task to save changes.</span>
+				    <button type="button" className="btn btn-danger my-2" onClick={() => erraseAll()}>Delete all tasks</button> <br />
 				</div>
 			</div>
 		</div>
