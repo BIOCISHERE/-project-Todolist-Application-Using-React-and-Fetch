@@ -9,7 +9,6 @@ const Home = () => {
 		fetch('https://assets.breatheco.de/apis/fake/todos/user/biocishere')
 		.then(res => res.json())
 		.then(data => setListTodos(listTodos.concat(data)))
-		
 	}
 
 	const put = (todo) => {
@@ -48,14 +47,14 @@ const Home = () => {
 		.then(data => console.log(data))
 	}
 
-	const erraseAll = () => {
+	const erraseAll = async () => {
 		errase();
-		
+		post();
 	}
 
 
 	useEffect(() => {
-		get();
+		get()
 	}, [])
 
 
@@ -89,11 +88,6 @@ const Home = () => {
 										setListTodos(newArray)
 										put(newArray)
 										setInputValue("")
-										/*
-										setListTodos(listTodos.concat( { "label": inputValue, "done": false } ));
-										setInputValue("");
-										put(listTodos);
-										*/
 									};
 								};
 							}}
