@@ -12,8 +12,8 @@ const Home = () => {
 			if(data.msg ==  "This use does not exists, first call the POST method first to create the list for this username"){
 				post()
 			} else {
-				let newArray = listTodos.concat(data)
-				setListTodos(newArray)
+				let newData = listTodos.concat(data)
+				setListTodos(newData)
 			}
 		})
 	}
@@ -86,9 +86,9 @@ const Home = () => {
 									if (inputValue === "") {
 										alert("No tasks, add a task");
 									} else {
-										let newArray = listTodos.concat( { "label": inputValue, "done": false } )
-										setListTodos(newArray)
-										put(newArray)
+										let newInputValue = listTodos.concat( { "label": inputValue, "done": false } )
+										setListTodos(newInputValue)
+										put(newInputValue)
 										setInputValue("")
 									};
 								};
@@ -101,9 +101,9 @@ const Home = () => {
 							<i
 								className="fas fa-trash-alt float-end py-1 pe-2"
 								onClick={() =>{
-									let newArray = listTodos.filter((i, current) => index!=current);
-									setListTodos(newArray);
-									{newArray.length == 0 ? errase() : put(newArray)}
+									let newTodo = listTodos.filter((i, current) => index!=current);
+									setListTodos(newTodo);
+									{newArray.length == 0 ? errase() : put(newTodo)}
 								}
 								}
 							></i>
